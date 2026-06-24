@@ -1,0 +1,117 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply border-surface-border;
+  }
+
+  body {
+    @apply bg-surface-secondary text-slate-900 font-sans;
+    /* Prevents double-tap zoom on mobile */
+    touch-action: manipulation;
+  }
+
+  :root {
+    --sidebar-width: 240px;
+    --navbar-height: 60px;
+    /* Light mode semantic colors */
+    --c-surface: #ffffff;
+    --c-surface-secondary: #f8fafc;
+    --c-surface-border: #e2e8f0;
+    --c-muted: #f1f5f9;
+    --c-muted-fg: #64748b;
+  }
+
+  html.dark {
+    --c-surface: #1e293b;
+    --c-surface-secondary: #0f172a;
+    --c-surface-border: #334155;
+    --c-muted: #273549;
+    --c-muted-fg: #94a3b8;
+  }
+
+  html.dark body {
+    color-scheme: dark;
+  }
+
+  /* Dark mode text overrides */
+  html.dark .text-slate-900 { color: #f1f5f9; }
+  html.dark .text-slate-800 { color: #e2e8f0; }
+  html.dark .text-slate-700 { color: #cbd5e1; }
+  html.dark .text-slate-600 { color: #94a3b8; }
+  html.dark .text-slate-500 { color: #64748b; }
+
+  /* Dark mode primary tint overrides */
+  html.dark .bg-primary-50  { background-color: rgb(99 102 241 / 0.12); }
+  html.dark .bg-primary-100 { background-color: rgb(99 102 241 / 0.2); }
+  html.dark .text-primary-700 { color: #a5b4fc; }
+  html.dark .text-primary-600 { color: #818cf8; }
+
+  /* Dark mode status badge overrides */
+  html.dark .bg-emerald-100  { background-color: rgb(6 78 59 / 0.35); }
+  html.dark .text-emerald-700 { color: #6ee7b7; }
+  html.dark .bg-amber-100    { background-color: rgb(92 45 0 / 0.35); }
+  html.dark .text-amber-700  { color: #fcd34d; }
+  html.dark .bg-blue-100     { background-color: rgb(23 37 84 / 0.35); }
+  html.dark .text-blue-700   { color: #93c5fd; }
+  html.dark .bg-red-50       { background-color: rgb(127 29 29 / 0.2); }
+  html.dark .text-red-600    { color: #fca5a5; }
+  html.dark .text-red-500    { color: #f87171; }
+  html.dark .bg-emerald-50   { background-color: rgb(6 78 59 / 0.2); }
+  html.dark .text-emerald-600 { color: #6ee7b7; }
+  html.dark .text-emerald-700 { color: #6ee7b7; }
+  html.dark .bg-slate-100    { background-color: rgb(51 65 85 / 0.4); }
+
+  /* Smooth scrolling for the whole app */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Prevent horizontal overflow on mobile */
+  body, #root {
+    overflow-x: hidden;
+    min-height: 100dvh;
+  }
+}
+
+@layer utilities {
+  /* Safe area padding for devices with notch/home indicator (iPhone X+) */
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  /* Prevents text selection on interactive elements */
+  .no-select {
+    -webkit-user-select: none;
+    user-select: none;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-primary-500 hover:bg-primary-600 text-white font-medium px-4 py-2 rounded-lg
+           transition-colors disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-secondary {
+    @apply bg-surface border border-surface-border hover:bg-muted text-slate-700 font-medium px-4 py-2 rounded-lg
+           transition-colors disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .card {
+    @apply bg-surface border border-surface-border rounded-xl shadow-sm;
+  }
+
+  .input {
+    @apply w-full px-3 py-2 border border-surface-border rounded-lg bg-surface
+           text-slate-900 placeholder:text-muted-foreground
+           focus:outline-none focus:ring-2 focus:ring-primary-500/30 focus:border-primary-500
+           transition-colors;
+  }
+}

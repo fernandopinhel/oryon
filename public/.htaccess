@@ -1,0 +1,29 @@
+Options -MultiViews
+RewriteEngine On
+
+# Força HTTPS
+RewriteCond %{HTTPS} off
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Serve arquivos e diretórios existentes diretamente
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# Tudo mais → index.html (SPA routing)
+RewriteRule ^ index.html [L]
+
+# Cache de assets estáticos (JS/CSS gerados com hash no nome)
+<FilesMatch "\.(js|css|woff2?|ttf|svg|png|jpg|webp|ico)$">
+  Header set Cache-Control "public, max-age=31536000, immutable"
+</FilesMatch>
+
+# HTML sem cache (sempre busca a versão atual)
+<FilesMatch "\.html$">
+  Header set Cache-Control "no-cache, no-store, must-revalidate"
+</FilesMatch>
+
+# Segurança básica
+Header always set X-Content-Type-Options "nosniff"
+Header always set X-Frame-Options "DENY"
+Header always set Referrer-Policy "strict-origin-when-cross-origin"
