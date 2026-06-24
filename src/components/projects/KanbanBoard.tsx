@@ -71,14 +71,12 @@ export default function KanbanBoard({
   return (
     <>
       {/*
-        Scroll container separado do flex row.
-        "w-max min-w-full" no flex row força o browser a calcular a largura
-        real das colunas (em vez de confiar no flex-1 que colapsa em iOS).
-        Resultado: overflow-x-auto funciona em todos os devices.
+        O próprio container overflow-x-auto É o flex row.
+        Não há wrapper intermediário — padrão mais confiável no iOS Safari.
+        flex-none + width explícita em cada coluna garante que o browser
+        compute a largura real do conteúdo e ative o scroll horizontal.
       */}
-      {/* scroll-snap-type no container + snap-start em cada coluna = carrossel com toque */}
-      <div className="overflow-x-auto overscroll-x-contain pb-4 snap-x snap-mandatory scroll-pl-4 -mx-1 px-1">
-        <div className="flex gap-3 min-h-[60dvh] w-max min-w-full">
+      <div className="flex gap-3 overflow-x-auto overscroll-x-contain pb-4 snap-x snap-mandatory">
         {COLUMNS.map(({ id, label, accent, bg }) => {
           const colTasks = tasksByStatus[id]
           const isTarget = dropTarget === id
@@ -90,9 +88,9 @@ export default function KanbanBoard({
               onDragLeave={handleDragLeave}
               onDrop={(e) => handleDrop(e, id)}
               className={cn(
-                // Mobile: largura quase toda a tela deixando "peek" da próxima coluna
-                // Desktop: flex-1 preenche o espaço disponível igualmente
-                'snap-start w-[82vw] max-w-[300px] lg:w-auto lg:max-w-[420px] lg:flex-1 shrink-0 flex flex-col rounded-xl border-t-4 transition-all duration-150',
+                // flex-none impede shrink/grow; w-[76vw] + max-w deixa ~46px de peek da próxima coluna
+                // lg:flex-1 distribui igualmente no desktop (sem scroll horizontal necessário)
+                'snap-start flex-none w-[76vw] max-w-[300px] min-h-[60dvh] lg:w-auto lg:max-w-none lg:flex-1 flex flex-col rounded-xl border-t-4 transition-all duration-150',
                 accent,
                 bg,
                 isTarget && 'ring-2 ring-primary-400 ring-offset-2 scale-[1.01]',
@@ -159,8 +157,7 @@ export default function KanbanBoard({
             </div>
           )
         })}
-        </div>{/* fim flex row interno */}
-      </div>{/* fim scroll container */}
+      </div>{/* fim flex + scroll container */}
 
       {/* Modal de criação / edição */}
       {editingTask !== undefined && (
