@@ -109,10 +109,10 @@ export default function AIAssistant({ project, tasksByStatus }: Props) {
       {open && (
         <>
           {/* Área de mensagens */}
-          <div className="border-t border-surface-border px-4 py-3 max-h-72 overflow-y-auto space-y-3">
+          <div className="border-t border-surface-border px-3 py-3 max-h-64 sm:max-h-72 overflow-y-auto space-y-3">
             {messages.length === 0 ? (
               <div className="space-y-2">
-                <p className="text-xs text-muted-foreground">
+                <p className="text-xs text-muted-foreground break-words">
                   Pergunte qualquer coisa sobre o projeto <strong>{project.title}</strong>:
                 </p>
                 {SUGGESTIONS.map((s) => (
@@ -120,7 +120,7 @@ export default function AIAssistant({ project, tasksByStatus }: Props) {
                     key={s}
                     type="button"
                     onClick={() => sendMessage(s)}
-                    className="w-full text-left text-xs px-3 py-2 rounded-lg bg-primary-50 text-primary-700 hover:bg-primary-100 transition-colors"
+                    className="w-full text-left text-xs px-3 py-2 rounded-lg bg-primary-50 text-primary-700 hover:bg-primary-100 transition-colors break-words"
                   >
                     {s}
                   </button>
@@ -131,7 +131,7 @@ export default function AIAssistant({ project, tasksByStatus }: Props) {
                 <div
                   key={i}
                   className={cn(
-                    'text-xs rounded-xl px-3 py-2 max-w-[90%] leading-relaxed',
+                    'text-xs rounded-xl px-3 py-2 max-w-[88%] leading-relaxed break-words',
                     msg.role === 'user'
                       ? 'bg-primary-500 text-white ml-auto'
                       : 'bg-muted text-slate-800',
@@ -144,7 +144,7 @@ export default function AIAssistant({ project, tasksByStatus }: Props) {
 
             {loading && (
               <div className="bg-muted rounded-xl px-3 py-2 max-w-[60%] flex items-center gap-2">
-                <Loader2 className="w-3 h-3 animate-spin text-muted-foreground" />
+                <Loader2 className="w-3 h-3 animate-spin text-muted-foreground shrink-0" />
                 <span className="text-xs text-muted-foreground">Pensando…</span>
               </div>
             )}
@@ -160,7 +160,7 @@ export default function AIAssistant({ project, tasksByStatus }: Props) {
               onChange={(e) => setInput(e.target.value)}
               placeholder="Pergunte sobre o projeto…"
               disabled={loading}
-              className="input text-xs py-2 flex-1"
+              className="input text-xs py-2 flex-1 min-w-0"
               aria-label="Mensagem para o assistente"
             />
             <button
