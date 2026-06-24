@@ -86,10 +86,15 @@ export default function TaskModal({
   return (
     <>
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-end sm:items-center justify-center sm:p-4 bg-black/40 backdrop-blur-sm"
       onClick={(e) => { if (e.target === e.currentTarget) onClose() }}
     >
-      <div className="w-full max-w-md bg-surface rounded-2xl shadow-xl overflow-hidden">
+      <div className="w-full sm:max-w-md bg-surface rounded-t-2xl sm:rounded-2xl shadow-xl overflow-hidden">
+        {/* Drag handle — mobile only */}
+        <div className="sm:hidden flex justify-center pt-3 pb-1">
+          <div className="w-10 h-1 rounded-full bg-muted-foreground/30" />
+        </div>
+
         {/* Header */}
         <div className="flex items-center justify-between px-5 py-4 border-b border-surface-border">
           <h2 className="font-semibold text-slate-900">
@@ -106,7 +111,7 @@ export default function TaskModal({
         </div>
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="p-5 space-y-4 max-h-[80vh] overflow-y-auto">
+        <form onSubmit={handleSubmit} className="p-5 space-y-4 max-h-[75dvh] sm:max-h-[80vh] overflow-y-auto">
           {/* Título */}
           <div>
             <label htmlFor="task-title" className="block text-sm font-medium text-slate-700 mb-1">

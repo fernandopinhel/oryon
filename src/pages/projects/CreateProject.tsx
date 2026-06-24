@@ -217,7 +217,7 @@ export default function CreateProject() {
           {/* Status */}
           <div>
             <span className="block text-sm font-medium text-slate-700 mb-2">Status inicial</span>
-            <div className="grid grid-cols-3 gap-2">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
               {STATUS_OPTIONS.map(({ value, label, desc }) => (
                 <button
                   key={value}
@@ -242,7 +242,7 @@ export default function CreateProject() {
           {/* Visibilidade */}
           <div>
             <span className="block text-sm font-medium text-slate-700 mb-2">Visibilidade</span>
-            <div className="grid grid-cols-3 gap-2">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
               {VISIBILITY_OPTIONS.map(({ value, label, desc, Icon }) => (
                 <button
                   key={value}

@@ -297,13 +297,13 @@ export default function EditProject() {
 
       {/* --- Informações do projeto --- */}
       <div className="card p-6">
-        <div className="flex items-center justify-between mb-6">
+        <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
           <h1 className="text-xl font-bold text-slate-900">Editar projeto</h1>
           <button
             type="button"
             onClick={() => setConfirmDelete(true)}
             disabled={deleting}
-            className="flex items-center gap-1.5 text-sm text-red-600 border border-red-200 hover:bg-red-50 px-3 py-1.5 rounded-lg transition-colors"
+            className="flex items-center gap-1.5 text-sm text-red-600 border border-red-200 hover:bg-red-50 px-3 py-1.5 rounded-lg transition-colors shrink-0"
           >
             <Trash2 className="w-4 h-4" />
             Excluir projeto
@@ -422,7 +422,7 @@ export default function EditProject() {
           {/* Visibilidade */}
           <div>
             <span className="block text-sm font-medium text-slate-700 mb-2">Visibilidade</span>
-            <div className="grid grid-cols-3 gap-2">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
               {VISIBILITY_OPTIONS.map(({ value, label, desc, Icon }) => (
                 <button
                   key={value}
@@ -619,7 +619,7 @@ export default function EditProject() {
                     onChange={(e) => handleRoleChange(member, e.target.value as ProjectMember['role'])}
                     disabled={updatingRoleId === member.id}
                     aria-label={`Permissão de ${member.profile.full_name}`}
-                    className="input text-xs py-1.5 pr-7 min-w-[120px]"
+                    className="input text-xs py-1.5 pr-7 w-28 sm:w-36"
                   >
                     {ROLE_OPTIONS.map(({ value, label }) => (
                       <option key={value} value={value}>{label}</option>

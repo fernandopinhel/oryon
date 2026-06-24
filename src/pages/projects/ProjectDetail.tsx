@@ -178,7 +178,7 @@ export default function ProjectDetail() {
         )}
 
         {/* Avatares dos membros */}
-        <div className="flex items-center gap-2 mt-4">
+        <div className="flex items-center gap-2 mt-4 flex-wrap">
           <div className="flex -space-x-2">
             {members.slice(0, 5).map((m) => (
               <Link key={m.user_id} to={`/perfil/${m.profile.username}`} title={m.profile.full_name}>
