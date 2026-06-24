@@ -70,8 +70,14 @@ export default function KanbanBoard({
 
   return (
     <>
-      {/* Board — scroll horizontal em telas pequenas, colunas expandem em telas largas */}
-      <div className="flex gap-3 overflow-x-auto overscroll-x-contain pb-4 min-h-[60dvh]">
+      {/*
+        Scroll container separado do flex row.
+        "w-max min-w-full" no flex row força o browser a calcular a largura
+        real das colunas (em vez de confiar no flex-1 que colapsa em iOS).
+        Resultado: overflow-x-auto funciona em todos os devices.
+      */}
+      <div className="overflow-x-auto overscroll-x-contain pb-4 -mx-1 px-1">
+        <div className="flex gap-3 min-h-[60dvh] w-max min-w-full">
         {COLUMNS.map(({ id, label, accent, bg }) => {
           const colTasks = tasksByStatus[id]
           const isTarget = dropTarget === id
@@ -83,7 +89,7 @@ export default function KanbanBoard({
               onDragLeave={handleDragLeave}
               onDrop={(e) => handleDrop(e, id)}
               className={cn(
-                'flex-1 min-w-[260px] max-w-[420px] flex flex-col rounded-xl border-t-4 transition-all duration-150',
+                'w-[280px] lg:flex-1 lg:w-auto shrink-0 flex flex-col rounded-xl border-t-4 transition-all duration-150',
                 accent,
                 bg,
                 isTarget && 'ring-2 ring-primary-400 ring-offset-2 scale-[1.01]',
@@ -150,7 +156,8 @@ export default function KanbanBoard({
             </div>
           )
         })}
-      </div>
+        </div>{/* fim flex row interno */}
+      </div>{/* fim scroll container */}
 
       {/* Modal de criação / edição */}
       {editingTask !== undefined && (
