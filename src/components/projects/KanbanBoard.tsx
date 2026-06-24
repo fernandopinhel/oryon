@@ -76,7 +76,8 @@ export default function KanbanBoard({
         real das colunas (em vez de confiar no flex-1 que colapsa em iOS).
         Resultado: overflow-x-auto funciona em todos os devices.
       */}
-      <div className="overflow-x-auto overscroll-x-contain pb-4 -mx-1 px-1">
+      {/* scroll-snap-type no container + snap-start em cada coluna = carrossel com toque */}
+      <div className="overflow-x-auto overscroll-x-contain pb-4 snap-x snap-mandatory scroll-pl-4 -mx-1 px-1">
         <div className="flex gap-3 min-h-[60dvh] w-max min-w-full">
         {COLUMNS.map(({ id, label, accent, bg }) => {
           const colTasks = tasksByStatus[id]
@@ -89,7 +90,9 @@ export default function KanbanBoard({
               onDragLeave={handleDragLeave}
               onDrop={(e) => handleDrop(e, id)}
               className={cn(
-                'w-[280px] lg:flex-1 lg:w-auto shrink-0 flex flex-col rounded-xl border-t-4 transition-all duration-150',
+                // Mobile: largura quase toda a tela deixando "peek" da próxima coluna
+                // Desktop: flex-1 preenche o espaço disponível igualmente
+                'snap-start w-[82vw] max-w-[300px] lg:w-auto lg:max-w-[420px] lg:flex-1 shrink-0 flex flex-col rounded-xl border-t-4 transition-all duration-150',
                 accent,
                 bg,
                 isTarget && 'ring-2 ring-primary-400 ring-offset-2 scale-[1.01]',

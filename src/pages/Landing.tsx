@@ -10,7 +10,7 @@ const features = [
 
 export default function Landing() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary-50 via-surface to-surface-secondary">
+    <div className="min-h-screen bg-surface-secondary">
       {/* Nav */}
       <nav className="flex items-center justify-between px-6 py-4 max-w-5xl mx-auto">
         <div className="flex items-center gap-2">
