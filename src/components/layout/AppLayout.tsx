@@ -43,7 +43,7 @@ export default function AppLayout() {
         {/* Conteúdo principal */}
         <main className="flex-1 lg:ml-[var(--sidebar-width)] pb-20 lg:pb-0">
           {isFullHeight ? (
-            <div className="h-[calc(100vh-var(--navbar-height))] p-3 pb-24 lg:pb-3">
+            <div className="h-[calc(100dvh-var(--navbar-height))] p-3 pb-24 lg:pb-3">
               <Outlet />
             </div>
           ) : isWide ? (

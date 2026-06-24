@@ -200,7 +200,7 @@ export default function ChatWindow({ otherId, otherProfile: propProfile, onMessa
       </div>
 
       {/* Área de mensagens */}
-      <div className="flex-1 overflow-y-auto px-4 py-4 space-y-0.5">
+      <div className="flex-1 overflow-y-auto overscroll-contain px-4 py-4 space-y-0.5">
         {loading ? (
           <div className="flex justify-center py-12">
             <Loader2 className="w-5 h-5 animate-spin text-muted-foreground" />
@@ -277,7 +277,7 @@ export default function ChatWindow({ otherId, otherProfile: propProfile, onMessa
       {/* Input */}
       <form
         onSubmit={handleSubmit}
-        className="flex items-end gap-2 px-4 py-3 border-t border-surface-border shrink-0 bg-surface"
+        className="flex items-end gap-2 px-4 pt-3 pb-[max(12px,env(safe-area-inset-bottom))] border-t border-surface-border shrink-0 bg-surface"
       >
         {/* Botão de anexo */}
         <input

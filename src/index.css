@@ -69,9 +69,11 @@
     scroll-behavior: smooth;
   }
 
-  /* Prevent horizontal overflow on mobile */
+  /* Prevent horizontal overflow on mobile.
+     overflow-x: clip (not hidden) avoids creating a scroll container,
+     which would break nested overflow-x: auto on iOS Safari. */
   body, #root {
-    overflow-x: hidden;
+    overflow-x: clip;
     min-height: 100dvh;
   }
 }

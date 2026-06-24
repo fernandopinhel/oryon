@@ -71,7 +71,7 @@ export default function KanbanBoard({
   return (
     <>
       {/* Board — scroll horizontal em telas pequenas, colunas expandem em telas largas */}
-      <div className="flex gap-3 overflow-x-auto pb-4 min-h-[62vh]">
+      <div className="flex gap-3 overflow-x-auto overscroll-x-contain pb-4 min-h-[60dvh]">
         {COLUMNS.map(({ id, label, accent, bg }) => {
           const colTasks = tasksByStatus[id]
           const isTarget = dropTarget === id
@@ -83,7 +83,7 @@ export default function KanbanBoard({
               onDragLeave={handleDragLeave}
               onDrop={(e) => handleDrop(e, id)}
               className={cn(
-                'flex-1 min-w-[240px] max-w-[420px] flex flex-col rounded-xl border-t-4 transition-all duration-150',
+                'flex-1 min-w-[260px] max-w-[420px] flex flex-col rounded-xl border-t-4 transition-all duration-150',
                 accent,
                 bg,
                 isTarget && 'ring-2 ring-primary-400 ring-offset-2 scale-[1.01]',
@@ -112,7 +112,7 @@ export default function KanbanBoard({
               </div>
 
               {/* Tarefas */}
-              <div className="flex-1 px-3 pb-3 space-y-2 overflow-y-auto max-h-[calc(100vh-260px)]">
+              <div className="flex-1 px-3 pb-3 space-y-2 overflow-y-auto max-h-[calc(100dvh-260px)]">
                 {colTasks.map((task) => (
                   <TaskCard
                     key={task.id}
