@@ -2,18 +2,27 @@ import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from '@/lib/supabase'
 
-// Página de callback após OAuth (Google, GitHub)
-// O Supabase redireciona aqui com o token na URL hash
 export default function AuthCallback() {
   const navigate = useNavigate()
 
   useEffect(() => {
-    supabase.auth.onAuthStateChange((event, session) => {
-      if (event === 'SIGNED_IN' && session) {
+    // Tenta sessão já processada (token no hash já foi consumido pelo SDK)
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session) {
         navigate('/feed', { replace: true })
-      } else if (event === 'SIGNED_OUT') {
-        navigate('/login', { replace: true })
+        return
       }
+
+      // Fallback: aguarda o evento SIGNED_IN (OAuth ainda processando)
+      const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+        if (event === 'SIGNED_IN' && session) {
+          navigate('/feed', { replace: true })
+        } else if (event === 'SIGNED_OUT') {
+          navigate('/login', { replace: true })
+        }
+      })
+
+      return () => subscription.unsubscribe()
     })
   }, [navigate])
 

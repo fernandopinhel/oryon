@@ -28,21 +28,20 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   initialized: false,
 
   initialize: async () => {
-    // Recupera sessão existente
     const { data: { session } } = await supabase.auth.getSession()
 
     if (session) {
-      set({ session, user: session.user })
-      await get().refreshProfile()
+      set({ session, user: session.user, initialized: true })
+      // Carrega perfil em background — não bloqueia a navegação
+      get().refreshProfile()
+    } else {
+      set({ initialized: true })
     }
 
-    set({ initialized: true })
-
-    // Escuta mudanças de auth em tempo real
     supabase.auth.onAuthStateChange(async (_event, session) => {
       set({ session, user: session?.user ?? null })
       if (session) {
-        await get().refreshProfile()
+        get().refreshProfile()
       } else {
         set({ profile: null })
       }
